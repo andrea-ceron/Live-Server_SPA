@@ -7,7 +7,7 @@ networks:
       config:
         - subnet: 172.21.0.0/24
 services:
-  server:
+  client:
     container_name: server
     image: web-server
     build:
@@ -17,7 +17,7 @@ services:
       dev-bridge:
         ipv4_address: 172.21.0.2
     volumes:
-      - ./frontend:/var/www/html/
+      - ${FRONTEND_PATH}:/var/www/html/
 
     ports:
       - 80:80
