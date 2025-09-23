@@ -9,10 +9,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     nano
 
-COPY ./bash/startup.sh /usr/local/bin/startup.sh
-RUN chmod +x /usr/local/bin/startup.sh
-
-RUN /usr/local/bin/startup.sh
 
 RUN a2enmod rewrite
 
