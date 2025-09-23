@@ -1,11 +1,22 @@
 #!/bin/bash
+
 FRONTEND_PATH=$1
 
 if [ -z "$FRONTEND_PATH" ]; then
-  echo "Uso: ./startup.sh /path/del/frontend"
   exit 1
 fi
 
-export FRONTEND_PATH=$(realpath "$FRONTEND_PATH")
+FRONTEND_PATH=$(realpath "$FRONTEND_PATH")
 
-docker-compose up -d
+if [ ! -d "$FRONTEND_PATH" ]; then
+  echo "Error: folder not found"
+  exit 1
+fi
+
+echo "$FRONTEND_PATH" > .frontend_path
+
+export FRONTEND_PATH
+
+docker compose up -d
+
+echo "Server started, frontend mounted from: $FRONTEND_PATH"
