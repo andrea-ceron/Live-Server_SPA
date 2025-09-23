@@ -1,0 +1,25 @@
+
+networks:
+  dev-bridge:
+    driver: bridge
+    name: dev-bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
+services:
+  server:
+    container_name: server
+    image: web-server
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    networks:
+      dev-bridge:
+        ipv4_address: 172.21.0.2
+    volumes:
+      - ./frontend:/var/www/html/
+
+    ports:
+      - 80:80
+
+
