@@ -7,18 +7,17 @@ networks:
       config:
         - subnet: 172.21.0.0/24
 services:
-  client:
+  server:
     container_name: server
     image: web-server
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./apache/Dockerfile
     networks:
       dev-bridge:
         ipv4_address: 172.21.0.2
     volumes:
       - ${FRONTEND_PATH}:/var/www/html/
-
     ports:
       - 80:80
 
