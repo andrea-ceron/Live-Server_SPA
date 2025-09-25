@@ -12,9 +12,19 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
-COPY ./apache-conf/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY ./apache-conf/ports.conf /etc/apache2/ports.conf
+COPY ./apache/apache-conf/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY ./apache/apache-conf/ports.conf /etc/apache2/ports.conf
+
+COPY ./reloader/dev_reloader /usr/local/bin/dev_reloader 
+RUN chmod +x /usr/local/bin/dev_reloader
+
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
 EXPOSE 80
 
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["/usr/local/bin/start.sh"] 
+
+
+# Use the official PHP image as a base image
+#FROM php:latest

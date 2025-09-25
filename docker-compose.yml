@@ -17,7 +17,7 @@ services:
       dev-bridge:
         ipv4_address: 172.21.0.2
     volumes:
-      - ${FRONTEND_PATH-/tmp/frontend}:/var/www/html/
+      - ${FRONTEND_PATH-/tmp/frontend}:/var/www/html/:delegated
     ports:
       - 80:80
 
