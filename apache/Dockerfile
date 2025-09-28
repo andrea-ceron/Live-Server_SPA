@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
 
 
 RUN a2enmod rewrite
+RUN a2enmod substitute
+RUN a2enmod proxy
+RUN a2enmod proxy_http
 
 COPY ./apache/apache-conf/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY ./apache/apache-conf/ports.conf /etc/apache2/ports.conf
@@ -25,6 +28,3 @@ EXPOSE 80
 
 CMD ["/usr/local/bin/start.sh"] 
 
-
-# Use the official PHP image as a base image
-#FROM php:latest
