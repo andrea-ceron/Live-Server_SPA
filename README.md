@@ -70,8 +70,8 @@ Before running the app, make sure you have:
 
    ![VS Code running on WSL](docs/image_3.png)
 
-4. Once connected, you are fully working inside your Linux subsystem.  
-   > Every code change will now be detected in real-time and reloaded by the application 🚀  
+4. Once connected, you are fully working inside your Linux subsystem.
+   > All of the following commands should be run in the configuration described so far. 🚀  
 
 5. To start the utility, `startup.sh` is designed to automatically locate your project.  
    You just need to run:
