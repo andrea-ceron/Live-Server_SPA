@@ -1,31 +1,62 @@
-# Live-Server_SPA
-This Live Server is a utility developed with the aim to help Single Page Application development by isolating the client-side implementation from the server one.
-As a Live Server the utility allows the code to be reloaded each time it is modified in real-time.
+```markdown
+# 🌐 Live-Server_SPA
+
+**Live-Server_SPA** is a utility designed to simplify the development of **Single Page Applications (SPA)** by isolating the client-side implementation from the server-side one.  
+As a *live server*, it provides **real-time reload** whenever the code is modified.
+
+---
+
+## 🎯 Goals
+
+- 🔹 **Isolate frontend code** → avoid building a new server for every SPA project  
+- 🔹 **Server-side rendering** of the frontend code  
+- 🔹 **Real-time reload** → every change in the code is instantly reflected in the browser  
+
+---
+
+## ⚡ Features
+
+- 🗂️ **Frontend code injection** → when the utility starts, specify the project directory and the frontend is automatically loaded into the Docker container  
+- 🎭 **Server-side rendering** → the internal server handles web app rendering  
+- 👀 **File monitoring with inotify** → detects changes in the Linux filesystem  
+- 🔄 **Browser reload notifications** → modifications are processed and the web app is reloaded  
+
+---
+
+## 🛠️ Technologies
+
+- 🖧 **Apache** → proxy for request redirection  
+- 💻 **C++** → used to build the server and monitor filesystem changes  
+- 📦 **Docker** → runs the entire application  
+- 🐚 **Bash scripts** → used for application startup and frontend directory loading  
+
+---
+
+## 📋 Requirements
+
+Before running the app, make sure you have:
+
+- 🐧 **Linux OS or WSL**  
+  > The utility relies on the Linux `inotify` syscall, so both the utility **and your IDE** must run on Linux (or WSL on Windows).  
+- 🐳 **Docker (with or without Docker Desktop)**  
+
+---
+
+## 💻 Running on Windows
+
+1. Install **WSL** (e.g., Ubuntu).  
+2. **Copy your project folder inside WSL**.  
+3. Open **VS Code with the WSL extension**:  
+   - Install **Remote - WSL** extension  
+   - Click the **colored rectangle in the bottom-left corner** → *Connect to WSL*  
+4. Once connected, you are fully working inside your Linux subsystem.  
+   > Every code change will now be detected in real-time and reloaded by the application 🚀  
+
+---
 
 
-## 🚀 Goals
-- **isolate the frontend code:** avoiding building a new utility for each SPA frontend project
-- **server side rendering of the frontend code**
-- **reloading the website at each code change in real time:** every time the code is changed inside the IDE the utility reloads the page in the browser
+## 📜 License
 
-
-## 🚀 Funzionalità
-- **frontend code injection:** when the utility start, specify the directory of the project and it will load automatically the frontend dir inside the docker
-- **server-side rendering:** the server inside the utility is the one responsible for the rendering of the web app.
-- **spotting IDE changes:** The utility uses inotify syscall for spotting changes in the linux directory (the utility works only on linux OS or linux subsystem)
-- **notify changes to browser** changes are then caught and processed so that the server reloads the web app.
-
-## 🚀 Tecnologies
-- **Apache:** used as a proxy to redirect the requests towards the server
-- **C++:** used for developing the server and to monitor the changes inside the directory loaded with the utility
-- **Docker:** used to run the entire application
-- **bash Script** used for starting the application and to load the frontend directory in the application
-
-## ⚙️ Requisites
-Before starting the installation process let's look what are the pre-requisites for successfully running the app.
-- **use a Linux OS or WSL:** you have to use linux not only to run the utility but also to run the IDE. I will explain how to run the utility especially for windows users.
-- **install docker with or without Docker Desktop**
-
-*How to run the Utility on Windows*
-
-
+Distributed under the **MIT License**.  
+See the [`LICENSE`](./LICENSE) file for details.
+```
