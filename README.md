@@ -87,13 +87,18 @@ Since we are not specifying the relative path to the project the script tries to
 ├── utilities/
 │ ├── Live Server
 ```
-So if we want to work on project D and launch our Live Server we open the terminal on Live server launch the app following the instruction specified in the next chapter and specify the name of the project we want to run.  
+So if we want to work on project D and launch our Live Server:
+- we open the terminal on Live server;
+- launch the app following the instruction specified in the next chapter;
+- specify the name of the project we want to run.  
+
 ```bash
 sh startup.sh ProjectName
 ```
-with this command the bash script will cd onto the main directory that includes all the techologies and go and find the path of the project. Once it has found it, it will automatically look for the subdirectory ./client and load that subdirectory.
 
-If you do not want to implement that directory structure you can alter the startup.sh file and increase or decrease the value of **maxdepth** that will increase the recursion depth of the Linux find command. Be careful the bigger the recursion the more time it will take for the utility to start.
+with this command the bash script will cd onto the main directory that includes all the techologies and find the path of the project. Once it has found it, it will automatically look for the subdirectory ./client and load that subdirectory.
+
+If you do not want to implement that directory structure you can alter the startup.sh file and increase or decrease the value of *maxdepth*. That will increase or decrease the recursion depth of the Linux find command. Be careful the greater the recursion depth the more files the find command will process.
 ```bash
 risultato="$(find . -maxdepth 3 -type d -iname ${PROJECT_PATH} -print -quit)/client"
 ```
