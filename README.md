@@ -49,6 +49,10 @@ Before running the app, make sure you have:
 3. Open **VS Code with the WSL extension**:  
    - Install **Remote - WSL** extension  
    - Click the **colored rectangle in the bottom-left corner** → *Connect to WSL*  
+   ![colored rectangle in the bottom-left corner](docs/image_1.png)
+   ![Connect to WSL](docs/image_2.png)
+   ![VS Code running on WSL](docs/image_3.png)
+
 4. Once connected, you are fully working inside your Linux subsystem.  
    > Every code change will now be detected in real-time and reloaded by the application 🚀  
 
