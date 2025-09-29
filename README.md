@@ -4,12 +4,9 @@
 **Live-Server_SPA** is a utility designed to simplify the development of **Single Page Applications (SPA)** by isolating the client-side implementation from the server-side one.  
 As a *live server*, it provides **real-time reload** whenever the code is modified.
 
-<br><br>
 ---
 
 <br><br>
-
-
 
 ## 🎯 Goals
 
@@ -17,12 +14,8 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 - 🔹 **Server-side rendering** of the frontend code  
 - 🔹 **Real-time reload** → every change in the code is instantly reflected in the browser  
 
-<br><br>
 ---
 <br><br>
-
-
-
 
 ## ⚡ Features
 
@@ -31,12 +24,8 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 - 👀 **File monitoring with inotify** → detects changes in the Linux filesystem  
 - 🔄 **Browser reload notifications** → modifications are processed and the web app is reloaded  
 
-<br><br>
 ---
 <br><br>
-
-
-
 
 ## 🛠️ Technologies
 
@@ -45,12 +34,8 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 - 📦 **Docker** → runs the entire application  
 - 🐚 **Bash scripts** → used for application startup and frontend directory loading  
 
-<br><br>
 ---
 <br><br>
-
-
-
 
 ## 📋 Requirements
 
@@ -60,12 +45,8 @@ Before running the app, make sure you have:
   > The utility relies on the Linux `inotify` syscall, so both the utility **and your IDE** must run on Linux (or WSL on Windows).  
 - 🐳 **Docker (with or without Docker Desktop)**  
 
-<br><br>
 ---
 <br><br>
-
-
-
 
 ## 💻 Requirements for Running on Windows
 
@@ -94,28 +75,30 @@ Before running the app, make sure you have:
 ```bash
 sh startup.sh <project-name>
 ```
-Since we are not specifying the relative path to the project the script tries to find the project. In order to do so we have to structure the project directory in a way that simplyfies the job to the script. My directory Structure is the following one:
+Since we are not specifying the relative path to the project the script tries to find the project. In order to do so we have to structure the project directory in a way that simplyfies the job to the script. The suggested directory structure is the following one:
 ```bash
-project-root/
-├── apache/
-│ ├── apache-conf/
-│ │ ├── 000-default.conf
-│ │ └── ports.conf
-│ └── Dockerfile
-├── reloader/
-│ ├── Makefile
-│ ├── main.cpp
-│ └── include/
-├── docker-compose.yml
-├── start.sh
-└── shutdown.sh
+├── c++/
+│ ├── project A
+│ └── project B
+│ └── project C
+├── js/
+│ ├── project D
+│ ├── project E
+├── utilities/
+│ ├── Live Server
 ```
+So if we want to work on project D and launch our Live Server we open the terminal on Live server launch the app following the instruction specified in the next chapter and specify the name of the project we want to run.  
+```bash
+sh startup.sh ProjectName
+```
+with this command the bash script will cd onto the main directory that includes all the techologies and go and find the path of the project. Once it has found it, it will automatically look for the subdirectory ./client and load that subdirectory.
 
-<br><br>
+If you do not want to implement that directory structure you can alter the startup.sh file and increase or decrease the value of **maxdepth** that will increase the recursion depth of the Linux find command. Be careful the bigger the recursion the more time it will take for the utility to start.
+```bash
+risultato="$(find . -maxdepth 3 -type d -iname ${PROJECT_PATH} -print -quit)/client"
+```
 ---
 <br><br>
-
-
 
 
 ## 💻 Running Application
@@ -140,9 +123,6 @@ sh startup.sh ProjectName
 sh shutdown.sh 
 ```
 
-
-
-<br><br>
 ---
 <br><br>
 
