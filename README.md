@@ -60,15 +60,15 @@ Before running the app, make sure you have:
    - Install the **Remote - WSL** extension  
    - Click the **colored rectangle in the bottom-left corner**  
 
-   ![Colored rectangle in the bottom-left corner](docs/image_1.png)
+   ![Colored rectangle in the bottom-left corner](docs/readme/image_1.png)
 
    *Connect to WSL*  
 
-   ![Connect to WSL](docs/image_2.png)
+   ![Connect to WSL](docs/readme/image_2.png)
 
    *VS Code running inside WSL*  
 
-   ![VS Code running on WSL](docs/image_3.png)
+   ![VS Code running on WSL](docs/readme/image_3.png)
 
 4. Once connected, you are fully working inside your Linux subsystem.
    > All of the following commands should be run in the configuration described so far. 🚀  
