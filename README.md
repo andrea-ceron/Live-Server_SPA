@@ -8,6 +8,9 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 ---
 
 
+
+
+
 ## 🎯 Goals
 
 - 🔹 **Isolate frontend code** → avoid building a new server for every SPA project  
@@ -16,6 +19,9 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 
 
 ---
+
+
+
 
 
 ## ⚡ Features
@@ -29,6 +35,9 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 ---
 
 
+
+
+
 ## 🛠️ Technologies
 
 - 🖧 **Apache** → proxy for request redirection  
@@ -38,6 +47,9 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 
 
 ---
+
+
+
 
 
 ## 📋 Requirements
@@ -52,6 +64,9 @@ Before running the app, make sure you have:
 ---
 
 
+
+
+
 ## 💻 Requirements for Running on Windows
 
 1. Install **WSL** (e.g., Ubuntu).  
@@ -63,9 +78,13 @@ Before running the app, make sure you have:
    ![colored rectangle in the bottom-left corner](docs/image_1.png)
 
    *Connect to WSL* 
+
+
    ![Connect to WSL](docs/image_2.png)
 
    *VS Code running on WSL* 
+
+
    ![VS Code running on WSL](docs/image_3.png)
 
 4. Once connected, you are fully working inside your Linux subsystem.  
@@ -76,27 +95,31 @@ Before running the app, make sure you have:
 
 
 
+
+
 ## 💻 Running Application
 
 1. Clone the repo
 ```bash
 git clone https://github.com/andrea-ceron/Live-Server_SPA.git
 ```
-2. **Copy your project folder inside WSL**.  
-3. Open **VS Code with the WSL extension**:  
-   - Install **Remote - WSL** extension  
-   - Click the **colored rectangle in the bottom-left corner**   
 
-   ![colored rectangle in the bottom-left corner](docs/image_1.png)
+2. **Build the Image**.  
+```bash
+docker compose build
+```
 
-   *Connect to WSL* 
-   ![Connect to WSL](docs/image_2.png)
+3. **Start the Utility**:  
+```bash
+sh startup.sh ProjectName
+```
 
-   *VS Code running on WSL* 
-   ![VS Code running on WSL](docs/image_3.png)
+4. **Close Utility**:
+```bash
+sh shutdown.sh 
+```
 
-4. Once connected, you are fully working inside your Linux subsystem.  
-   > Every code change will now be detected in real-time and reloaded by the application 🚀  
+
 
 
 ---
