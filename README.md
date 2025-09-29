@@ -4,10 +4,10 @@
 **Live-Server_SPA** is a utility designed to simplify the development of **Single Page Applications (SPA)** by isolating the client-side implementation from the server-side one.  
 As a *live server*, it provides **real-time reload** whenever the code is modified.
 
-
+<br><br>
 ---
 
-
+<br><br>
 
 
 
@@ -17,9 +17,9 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 - 🔹 **Server-side rendering** of the frontend code  
 - 🔹 **Real-time reload** → every change in the code is instantly reflected in the browser  
 
-
+<br><br>
 ---
-
+<br><br>
 
 
 
@@ -31,9 +31,9 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 - 👀 **File monitoring with inotify** → detects changes in the Linux filesystem  
 - 🔄 **Browser reload notifications** → modifications are processed and the web app is reloaded  
 
-
+<br><br>
 ---
-
+<br><br>
 
 
 
@@ -45,9 +45,9 @@ As a *live server*, it provides **real-time reload** whenever the code is modifi
 - 📦 **Docker** → runs the entire application  
 - 🐚 **Bash scripts** → used for application startup and frontend directory loading  
 
-
+<br><br>
 ---
-
+<br><br>
 
 
 
@@ -60,9 +60,9 @@ Before running the app, make sure you have:
   > The utility relies on the Linux `inotify` syscall, so both the utility **and your IDE** must run on Linux (or WSL on Windows).  
 - 🐳 **Docker (with or without Docker Desktop)**  
 
-
+<br><br>
 ---
-
+<br><br>
 
 
 
@@ -90,9 +90,30 @@ Before running the app, make sure you have:
 4. Once connected, you are fully working inside your Linux subsystem.  
    > Every code change will now be detected in real-time and reloaded by the application 🚀  
 
+4. In order to start the Utility smoothly I decided to implement inside the bash script startup.sh a simple script that allows to find the project autonomuosly. All that you have to do is type after the command the name of the directory that includes the client dir that you want to run:
+```bash
+sh startup.sh <project-name>
+```
+Since we are not specifying the relative path to the project the script tries to find the project. In order to do so we have to structure the project directory in a way that simplyfies the job to the script. My directory Structure is the following one:
+```bash
+project-root/
+├── apache/
+│ ├── apache-conf/
+│ │ ├── 000-default.conf
+│ │ └── ports.conf
+│ └── Dockerfile
+├── reloader/
+│ ├── Makefile
+│ ├── main.cpp
+│ └── include/
+├── docker-compose.yml
+├── start.sh
+└── shutdown.sh
+```
 
+<br><br>
 ---
-
+<br><br>
 
 
 
@@ -121,8 +142,10 @@ sh shutdown.sh
 
 
 
-
+<br><br>
 ---
+<br><br>
+
 ## 📜 License
 
 Distributed under the **MIT License**.  
