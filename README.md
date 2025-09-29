@@ -1,4 +1,4 @@
-```markdown
+
 # 🌐 Live-Server_SPA
 
 **Live-Server_SPA** is a utility designed to simplify the development of **Single Page Applications (SPA)** by isolating the client-side implementation from the server-side one.  
@@ -59,4 +59,4 @@ Before running the app, make sure you have:
 
 Distributed under the **MIT License**.  
 See the [`LICENSE`](./LICENSE) file for details.
-```
+
