@@ -8,7 +8,7 @@ As shown by the Use Case Diagram we have 4 different actors for this application
 - **FileSystem**
 
 ![Colored rectangle in the bottom-left corner](docs/01-requisites/UseCaseDiagram.png)
-
+docs/01-requisites/UseCaseDiagram.png
 ---
 
 ## Requisistes
