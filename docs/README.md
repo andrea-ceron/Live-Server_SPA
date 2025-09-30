@@ -7,7 +7,7 @@ As shown by the Use Case Diagram we have 4 different actors for this application
 - **Browser**
 - **FileSystem**
 
-![Colored rectangle in the bottom-left corner](docs/readme/image_1.png)
+![Colored rectangle in the bottom-left corner](docs/01-requisites/UseCaseDiagram.png)
 
 ---
 
