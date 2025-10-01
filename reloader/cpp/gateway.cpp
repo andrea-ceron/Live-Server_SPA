@@ -25,50 +25,36 @@ std::string Gateway::build_request_path(char* buffer){
 }
 
 void Gateway::reload_endpoint(int client_fd){
-    // Inizializza l'header per SSE
     const std::string sse_headers =
         "HTTP/1.1 200 OK\r\n"
         "Content-Type: text/event-stream\r\n"
         "Cache-Control: no-cache\r\n"
         "Connection: keep-alive\r\n\r\n";
         
-    // Invia gli header SSE iniziali
     ssize_t sent = send(client_fd, sse_headers.c_str(), sse_headers.length(), 0);
     if (sent == -1) {
-        // Errore nell'invio degli header, la connessione è probabilmente chiusa.
         std::cerr << "Errore invio header SSE al client " << client_fd << std::endl;
         return;
     }
 
-    // Loop infinito per mantenere viva la connessione SSE e fare polling
     while (true) {
-        // 1. Legge lo stato dell'evento dal Singleton
         bool event_happened = events_register::getInstance().read_event();
 
         if (event_happened) {
-            // 2. Se l'evento è true, invia un messaggio SSE al client.
             const std::string sse_message = "data: reload\n\n";
             ssize_t bytes_sent = send(client_fd, sse_message.c_str(), sse_message.length(), 0);
 
             if (bytes_sent == -1) {
                 std::cerr << "Client " << client_fd << " disconnesso durante l'invio dell'evento." << std::endl;
-                break; // Esci dal loop se l'invio fallisce (client disconnesso)
+                break; 
             }
             std::cout << "Evento di ricarica inviato a client " << client_fd << std::endl;
 
         } else {
-            // 3. Se nessun evento è accaduto, attendi un breve periodo (polling).
-            // ATTENZIONE: un polling troppo rapido consuma molta CPU!
-            usleep(50000); // Attendi 50ms (50,000 microsecondi)
-            
-            // Invia periodicamente un "heartbeat" per mantenere viva la connessione
-            // e prevenire timeout da parte di proxy/firewall (SSE standard).
+            usleep(50000); 
             const std::string heartbeat = ":heartbeat\n\n";
             send(client_fd, heartbeat.c_str(), heartbeat.length(), MSG_NOSIGNAL);
         }
-
-        // Controllo aggiuntivo per vedere se il client ha chiuso la connessione.
-        // Se non fai questo controllo e il client chiude, il thread rimarrà bloccato nel loop.
         char buffer[1];
         if (recv(client_fd, buffer, 1, MSG_PEEK | MSG_DONTWAIT) == 0 && errno != EAGAIN) {
              std::cout << "Client " << client_fd << " ha chiuso la connessione (recv check)." << std::endl;
@@ -76,7 +62,6 @@ void Gateway::reload_endpoint(int client_fd){
         }
     }
 
-    // Qui il thread termina, chiudi il file descriptor del client.
     close(client_fd);
     std::cout << "Connessione SSE terminata per client " << client_fd << std::endl;
 }
@@ -105,7 +90,6 @@ void Gateway::injection_endopoint(int client_fd, const std::string& html_path){
     if (pos != std::string::npos) {
         html_template.insert(pos, script_tag);
     } else {
-        // Fallback: aggiungi in fondo se non trovi </body>
         html_template += script_tag;
     }
     bool full_http_header = false;

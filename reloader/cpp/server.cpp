@@ -55,10 +55,7 @@ bool ServerSSE::start(){
     }
     std::cout << "server start()" << std::endl;
 
-    // keep_polling.store(true);
-    // std::thread pollerThread(&ServerSSE::pollEvents, this);
-    // pollerThread.detach(); 
-    
+
     return true;
 
 }
@@ -70,12 +67,11 @@ void ServerSSE::acceptClients() {
     while ((client_fd = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) >= 0) {
         if (client_fd < 0) {
             perror("accept");
-            continue; // oppure break, dipende da cosa vuoi
+            continue; 
         }
         std::cout << "client_fd -> " << client_fd << std::endl;
-        // Avvia un thread per gestire il routing della richiesta
         std::thread clientThread(&ServerSSE::handleClientRequest, this, client_fd);
-        clientThread.detach(); // Il thread si gestirà da solo
+        clientThread.detach();
         
         std::cout << "Nuova richiesta da " 
                   << inet_ntoa(address.sin_addr) << ":" 
@@ -111,11 +107,7 @@ void ServerSSE::handleClientRequest(int client_fd) {
 
 
 void ServerSSE::setRootPath(const std::string& path) {
-    // Memorizza il percorso radice nella variabile membro
     m_html_root_dir = path; 
-    // std::cout<< m_html_root_dir << std::endl;
-    // DEBUG: Potresti aggiungere un controllo per rimuovere lo slash finale se presente, 
-    // per semplificare la concatenazione successiva (es. "/var/www/html" + "/index.html").
     if (!m_html_root_dir.empty() && m_html_root_dir.back() == '/') {
         m_html_root_dir.pop_back();
     }

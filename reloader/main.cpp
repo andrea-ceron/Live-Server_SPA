@@ -32,16 +32,14 @@ int main(int argc, char* argv[]){
         std::cerr << "ERRORE: Impossibile avviare il server sulla porta 8080.\n";
         return -1;
     }    
-    // Thread 1: Server HTTP e SSE
     std::thread acceptThread([&server]() { 
         try{
             std::cout << "Server thread started, listening on port 8080.\n";
-            server.acceptClients(); // Ciclo infinito
+            server.acceptClients(); 
         }catch(const std::exception& e){
             std::cout << "Eccezione nel main -> "<< e.what() << std::endl;
         }
     });    
-    // Thread 2: Watcher (inotify)
     Watcher watcher; 
 
     try {
