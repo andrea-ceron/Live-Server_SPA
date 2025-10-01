@@ -5,6 +5,8 @@
 #include <sys/socket.h> 
 #include <unistd.h>  
 #include <iostream>
+#include <stdexcept>
+
 
 std::string Gateway::build_request_path(char* buffer){
     std::string request(buffer);
@@ -51,7 +53,7 @@ void Gateway::reload_endpoint(int client_fd){
             std::cout << "Evento di ricarica inviato a client " << client_fd << std::endl;
 
         } else {
-            usleep(50000); 
+            usleep(500000); 
             const std::string heartbeat = ":heartbeat\n\n";
             send(client_fd, heartbeat.c_str(), heartbeat.length(), MSG_NOSIGNAL);
         }
@@ -66,7 +68,8 @@ void Gateway::reload_endpoint(int client_fd){
     std::cout << "Connessione SSE terminata per client " << client_fd << std::endl;
 }
 
-void Gateway::injection_endopoint(int client_fd, const std::string& html_path){
+void Gateway::injection_endpoint(int client_fd, const std::string& html_path){
+    std::cout << html_path << std::endl;
     std::string html_template = this->read_file_to_string(html_path);
 
     const std::string sse_js_code = R"(
@@ -98,19 +101,57 @@ void Gateway::injection_endopoint(int client_fd, const std::string& html_path){
 
 }
 
+void Gateway::serve_static_file(int client_fd, const std::string& path) {
+    try {
+        if (path.starts_with("/.well-known/")) {
+            close(client_fd); // chiudi silenziosamente
+            return;
+        }
+        std::cout << "entro in static_file "<< path << std::endl;
+        std::string file_content = read_file_to_string(path);
+        std::string content_type = get_content_type(path);
+        bool full_http_header = false;
+        std::cout << "content type "<< content_type << std::endl;
+        send_to_client(full_http_header, client_fd, file_content, content_type);
+    } catch (const std::exception& e) {
+        std::cerr << "Errore nel servire file statico (" << path << "): " << e.what() << std::endl;
+        std::string error_response =
+            "HTTP/1.1 404 Not Found\r\n"
+            "Content-Type: text/plain\r\n\r\n"
+            "File not found";
+        send(client_fd, error_response.c_str(), error_response.size(), 0);
+    }
+    close(client_fd);
+}
+
+std::string Gateway::get_content_type(const std::string& path) {
+    std::cout << "get_content_type" << path << std::endl;
+    if (path.ends_with(".html")) return "text/html";
+    if (path.ends_with(".js"))   return "application/javascript";
+    if (path.ends_with(".css"))  return "text/css";
+    if (path.ends_with(".png"))  return "image/png";
+    if (path.ends_with(".jpg") || path.ends_with(".jpeg")) return "image/jpeg";
+    if (path.ends_with(".svg"))  return "image/svg+xml";
+    if (path.ends_with(".ico"))  return "image/x-icon";  // favicon
+
+    throw std::runtime_error("Nessun content-type trovato per il file: " + path);
+}
+
+
 std::string Gateway::read_file_to_string(const std::string& path) {
 
     std::ifstream file(path, std::ios::in | std::ios::binary);
 
     if (!file.is_open()) {
-        return ""; 
+        throw std::runtime_error("Nessun file trovato: " + path);
     }
 
     std::ostringstream ss;
     ss << file.rdbuf();
 
     return ss.str();
-}
+} 
+
 
 void Gateway::send_to_client(bool endpoint_flag, int client_fd, const std::string& payload_content, const std::string& mime_type){
     if(endpoint_flag){

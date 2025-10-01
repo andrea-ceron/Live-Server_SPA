@@ -93,6 +93,7 @@ void ServerSSE::handleClientRequest(int client_fd) {
     }
 
     std::string requested_path = endpoint_handler.build_request_path(buffer);
+    std::cout <<"handleClient request "<< m_html_root_dir + requested_path << std::endl;
     
     if (requested_path == "/events") {
         endpoint_handler.reload_endpoint(client_fd);
@@ -100,8 +101,15 @@ void ServerSSE::handleClientRequest(int client_fd) {
         return;
     }
     if (requested_path == "/") {
-        endpoint_handler.injection_endopoint(client_fd, "var/www/html/index.html" );
+        std::cout << "entrato il /" << std::endl;
+        std::string target_file = "/index.html";
+        endpoint_handler.injection_endpoint(client_fd, m_html_root_dir+target_file);
     } 
+    else {
+        std::cout << "entrato in else" <<requested_path<< std::endl;
+
+        endpoint_handler.serve_static_file(client_fd, m_html_root_dir+requested_path);
+    }
     close(client_fd);
 }
 

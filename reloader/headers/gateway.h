@@ -12,10 +12,12 @@ class Gateway{
         std::string read_file_to_string(const std::string& path);
         std::vector<int> clients;       
         std::mutex clients_mutex;
-    public:
+        std::string get_content_type(const std::string& path);
+        public:
         std::string build_request_path(char* buffer);
         void reload_endpoint(int client_fd);
-        void injection_endopoint(int client_fd, const std::string& html_path);
+        void injection_endpoint(int client_fd, const std::string& html_path);
+        void serve_static_file(int client_fd, const std::string& path);
 };
 
 #endif // GATEWAY_H
