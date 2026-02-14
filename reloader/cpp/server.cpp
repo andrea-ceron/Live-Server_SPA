@@ -32,22 +32,22 @@ ServerSSE::~ServerSSE() {
 }
 
 bool ServerSSE::start(){
-    server_fd = socket(AF_INET, SOCK_STREAM, 0); // descriptor server
+    server_fd = socket(AF_INET, SOCK_STREAM, 0); 
     if (server_fd < 0) {
         std::cerr << "Errore: impossibile creare il socket\n";
         return false;
     }
     int opt = 1;
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) {
-        std::cerr << "Attenzione: setsockopt fallito, ma si continua.\n";
+        std::cerr << "Attenzione: setsockopt fallito, ma continua.\n";
     }
-    if(bind(server_fd, (struct sockaddr *)&address, sizeof(address))< 0){ // binding socket
+    if(bind(server_fd, (struct sockaddr *)&address, sizeof(address))< 0){
         std::cerr << "Errore: bind fallito\n";
         close(server_fd); 
         server_fd = -1;
         return false;    
     }
-    if(listen(server_fd, 3) < 0){ // listen sul socket con max 3 connessioni in coda 
+    if(listen(server_fd, 3) < 0){ 
         std::cerr << "Errore: listen fallito\n";
         close(server_fd); 
         server_fd = -1;

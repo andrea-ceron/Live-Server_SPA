@@ -19,7 +19,6 @@ Watcher::Watcher (){
 
 Watcher::~Watcher(){
     close(fd);
-
 }
 
 

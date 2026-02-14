@@ -104,7 +104,7 @@ void Gateway::injection_endpoint(int client_fd, const std::string& html_path){
 void Gateway::serve_static_file(int client_fd, const std::string& path) {
     try {
         if (path.starts_with("/.well-known/")) {
-            close(client_fd); // chiudi silenziosamente
+            close(client_fd); 
             return;
         }
         std::cout << "entro in static_file "<< path << std::endl;
@@ -132,7 +132,7 @@ std::string Gateway::get_content_type(const std::string& path) {
     if (path.ends_with(".png"))  return "image/png";
     if (path.ends_with(".jpg") || path.ends_with(".jpeg")) return "image/jpeg";
     if (path.ends_with(".svg"))  return "image/svg+xml";
-    if (path.ends_with(".ico"))  return "image/x-icon";  // favicon
+    if (path.ends_with(".ico"))  return "image/x-icon";  
 
     throw std::runtime_error("Nessun content-type trovato per il file: " + path);
 }
